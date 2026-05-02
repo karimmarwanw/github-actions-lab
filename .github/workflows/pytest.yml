@@ -5,13 +5,10 @@ on:
   pull_request:
 
 jobs:
-
   test:
-
     strategy:
-
+      fail-fast: false
       matrix:
-
         os: [ubuntu-latest, windows-latest, macos-latest]
 
     runs-on: ${{ matrix.os }}
@@ -31,4 +28,6 @@ jobs:
           pip install pytest
 
       - name: Run pytest
-        run: PYTHONPATH=. pytest -v scripts/ 
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: pytest -v scripts/
